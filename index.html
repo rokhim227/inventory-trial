@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Indi Apps V2.0</title>
+    <title>Hanam Hanum</title>
     <!-- Dynamic Favicon -->
-    <link id="dynamicFavicon" rel="icon" type="image/png" href="https://s6.imgcdn.dev/YfkbUy.png">
+    <link id="dynamicFavicon" rel="icon" type="image/png" href="https://s6.imgcdn.dev/Y3dmj8.png">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome -->
@@ -87,7 +87,7 @@
     <div id="loginScreen" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 transition-opacity duration-300">
         <div class="glass-panel p-8 rounded-2xl shadow-2xl w-[90%] max-w-md transform transition-all">
             <div class="text-center mb-8">
-                <img id="loginLogo" src="https://s6.imgcdn.dev/YfkbUy.png" alt="Logo" class="w-24 h-24 mx-auto mb-4 drop-shadow-lg object-contain bg-white rounded-full p-2">
+                <img id="loginLogo" src="https://s6.imgcdn.dev/Y3dmj8.png" alt="Logo" class="w-24 h-24 mx-auto mb-4 drop-shadow-lg object-contain bg-white rounded-full p-2">
                 <h1 class="text-2xl font-bold text-slate-800" id="loginTitle">Inventory Login</h1>
                 <p class="text-sm text-slate-500 mt-1">Silakan masuk ke akun Anda</p>
             </div>
@@ -122,7 +122,7 @@
                 </button>
             </div>
             <div class="mt-8 text-center text-xs text-slate-400" id="loginCopyright">
-                &copy; 2026 Indi Apps
+                &copy; 2026 Hanam Hanum
             </div>
         </div>
     </div>
@@ -232,19 +232,8 @@
                     </div>
                 </div>
                 
-                <!-- Kartu Khusus Store -->
-                <div class="store-only-card bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl p-5 text-white shadow-lg shadow-blue-500/20 relative overflow-hidden transition-all hover:-translate-y-1">
-                    <div class="absolute -right-4 -top-4 opacity-20"><i class="fa-solid fa-snowflake text-7xl"></i></div>
-                    <p class="text-blue-100 text-sm font-medium mb-1">Bahan Frozen</p>
-                    <h3 class="text-3xl font-bold mb-2" id="dashFrozenCount">0 <span class="text-sm font-normal">Item</span></h3>
-                    <p class="text-xs text-blue-100">Tersedia di Database</p>
-                </div>
-                <div class="store-only-card bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl p-5 text-white shadow-lg shadow-amber-500/20 relative overflow-hidden transition-all hover:-translate-y-1">
-                    <div class="absolute -right-4 -top-4 opacity-20"><i class="fa-solid fa-box-open text-7xl"></i></div>
-                    <p class="text-amber-100 text-sm font-medium mb-1">Bahan Dry</p>
-                    <h3 class="text-3xl font-bold mb-2" id="dashDryCount">0 <span class="text-sm font-normal">Item</span></h3>
-                    <p class="text-xs text-amber-100">Tersedia di Database</p>
-                </div>
+                <!-- Placeholder untuk Kartu Kategori Dinamis -->
+                <div id="placeholderDynamicCards" class="contents store-only-card"></div>
 
                 <!-- Kartu Khusus Admin Warehouse -->
                 <div class="wh-only-card hidden bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl p-5 text-white shadow-lg shadow-indigo-500/20 relative overflow-hidden transition-all hover:-translate-y-1">
@@ -284,9 +273,8 @@
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5">
                     <h3 class="font-bold text-slate-800 mb-4">Komposisi Bahan</h3>
                     <div class="relative h-48 w-full flex justify-center data-fade" id="wrapChartPie"><canvas id="pieChart"></canvas></div>
-                    <div class="mt-4 flex justify-center gap-4 text-sm font-medium text-slate-600">
-                        <div class="flex items-center gap-1.5"><div class="w-3 h-3 rounded-full bg-blue-500 shadow-sm"></div> Frozen</div>
-                        <div class="flex items-center gap-1.5"><div class="w-3 h-3 rounded-full bg-amber-500 shadow-sm"></div> Dry</div>
+                    <!-- Legend Dinamis untuk Pie Chart -->
+                    <div class="mt-4 flex justify-center flex-wrap gap-4 text-sm font-medium text-slate-600" id="pieChartLegend">
                     </div>
                 </div>
             </div>
@@ -348,7 +336,7 @@
                         <div class="overflow-x-auto border border-slate-200 rounded-xl mb-4">
                             <table class="w-full text-left text-sm whitespace-nowrap min-w-max">
                                 <thead class="bg-slate-50 border-b border-slate-200">
-                                    <tr><th class="px-4 py-3">Bahan</th><th class="px-4 py-3">Qty</th><th class="px-4 py-3">Prod & Exp</th><th class="px-4 py-3 bg-amber-50 w-48 text-center">Input Kode Lot</th></tr>
+                                    <tr><th class="px-4 py-3">Bahan</th><th class="px-4 py-3">Qty</th></tr>
                                 </thead>
                                 <tbody id="inboundSjTableBody" class="divide-y divide-slate-100"></tbody>
                             </table>
@@ -369,6 +357,10 @@
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-500 mb-1">Tanggal Transaksi</label>
+                            <input type="datetime-local" id="frmTanggal" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none bg-slate-50" required>
+                        </div>
                         <div>
                             <label class="block text-xs font-medium text-slate-500 mb-1">Resto (Lokasi Stock)</label>
                             <select id="frmResto" onchange="handleScanRestoChange()" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none bg-white font-medium text-slate-700"></select>
@@ -410,18 +402,6 @@
                         <div id="stockInfoWrap" class="hidden col-span-1 md:col-span-2 bg-blue-50 p-3 rounded-lg border border-blue-100 transition-colors">
                             <span class="text-xs text-blue-600 font-medium">Stock System saat ini: <span id="frmStockSystem" class="font-bold text-lg inline-block">0</span> <span id="frmStockBesar" class="text-sm font-normal text-blue-500 ml-1 inline-block"></span></span>
                         </div>
-                        <div id="boxLot">
-                            <label class="block text-xs font-medium text-slate-500 mb-1">Kode Lot (Kedatangan)</label>
-                            <input type="text" id="frmLot" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
-                        </div>
-                        <div id="boxProd">
-                            <label class="block text-xs font-medium text-slate-500 mb-1">Kode Produksi</label>
-                            <input type="text" id="frmProd" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
-                        </div>
-                        <div id="boxExp">
-                            <label class="block text-xs font-medium text-slate-500 mb-1">Expired Date</label>
-                            <input type="date" id="frmExp" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
-                        </div>
                     </div>
                     <div class="pt-4 border-t border-slate-100 mt-2">
                         <button type="button" id="btnSubmitTrx" onclick="submitTransaction()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-blue-500/30 transition-all flex justify-center items-center gap-2">
@@ -455,7 +435,7 @@
                         </div>
                         <div class="w-full">
                             <select id="scanHistCategory" onchange="filterScanHistory()" class="w-full border border-slate-200 bg-slate-50 rounded-lg px-3 py-2 text-sm outline-none shadow-sm">
-                                <option value="">Semua Kategori</option><option value="Frozen">Frozen</option><option value="Dry">Dry</option>
+                                <option value="">Semua Kategori</option>
                             </select>
                         </div>
                         <div class="relative w-full admin-only-element" id="wrap-filter-resto-scan">
@@ -472,7 +452,7 @@
                 <div class="overflow-x-auto hide-scroll p-0 data-fade" id="wrapScanHist">
                     <table class="w-full text-left text-sm whitespace-nowrap min-w-max">
                         <thead class="bg-slate-50 text-slate-600 border-b border-slate-100">
-                            <tr><th class="px-5 py-3 font-medium">Tanggal</th><th class="px-5 py-3 font-medium">Kode Bahan</th><th class="px-5 py-3 font-medium">Nama Bahan</th><th class="px-5 py-3 font-medium">Kategori</th><th class="px-5 py-3 font-medium">Qty</th><th class="px-5 py-3 font-medium">Lot/Prod/Exp</th><th class="px-5 py-3 font-medium">Resto</th><th class="px-5 py-3 font-medium text-center">Aksi</th></tr>
+                            <tr><th class="px-5 py-3 font-medium">Tanggal</th><th class="px-5 py-3 font-medium">Kode Bahan</th><th class="px-5 py-3 font-medium">Nama Bahan</th><th class="px-5 py-3 font-medium">Kategori</th><th class="px-5 py-3 font-medium">Qty</th><th class="px-5 py-3 font-medium">Resto</th><th class="px-5 py-3 font-medium text-center">Aksi</th></tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100" id="scanHistBody"></tbody>
                     </table>
@@ -528,7 +508,7 @@
                 <div class="p-6 border-b border-slate-100">
                     <h4 class="font-bold text-slate-700 mb-3 text-sm flex items-center"><i class="fa-solid fa-box mr-2 text-blue-600"></i> Tambah Item Bahan</h4>
                     <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
-                        <div class="md:col-span-4 relative" id="wrapSjDropdown">
+                        <div class="md:col-span-6 relative" id="wrapSjDropdown">
                             <label class="block text-[10px] uppercase font-bold text-slate-500 mb-1">Bahan</label>
                             <div class="flex gap-1">
                                 <div class="relative flex-1">
@@ -542,7 +522,7 @@
                             <ul id="listBahanDropdown_sj" class="hidden absolute z-50 w-full bg-white border border-slate-300 shadow-xl rounded-lg mt-1 max-h-56 overflow-y-auto custom-scrollbar"></ul>
                         </div>
                         
-                        <div class="md:col-span-2">
+                        <div class="md:col-span-3">
                             <label class="block text-[10px] uppercase font-bold text-slate-500 mb-1">Qty</label>
                             <div class="flex gap-1">
                                 <input type="number" id="sjQty" class="w-full border border-slate-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
@@ -550,17 +530,7 @@
                             </div>
                         </div>
 
-                        <div class="md:col-span-2">
-                            <label class="block text-[10px] uppercase font-bold text-slate-500 mb-1">Kode Produksi</label>
-                            <input type="text" id="sjProd" class="w-full border border-slate-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Opsional">
-                        </div>
-
-                        <div class="md:col-span-2">
-                            <label class="block text-[10px] uppercase font-bold text-slate-500 mb-1">Exp Date</label>
-                            <input type="date" id="sjExp" class="w-full border border-slate-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
-                        </div>
-
-                        <div class="md:col-span-2">
+                        <div class="md:col-span-3">
                             <button type="button" onclick="addBahanToSjCart()" class="w-full bg-blue-50 text-blue-600 border border-blue-200 font-bold py-1.5 rounded-lg hover:bg-blue-100 transition shadow-sm text-sm">
                                 <i class="fa-solid fa-plus"></i> Tambah
                             </button>
@@ -572,10 +542,10 @@
                 <div class="p-0">
                     <table class="w-full text-left text-sm whitespace-nowrap min-w-max">
                         <thead class="bg-slate-50 border-b border-slate-200">
-                            <tr><th class="px-5 py-3 w-10 text-center">#</th><th class="px-5 py-3">Kode & Nama Bahan</th><th class="px-5 py-3 text-center">Qty</th><th class="px-5 py-3 text-center">Prod & Exp</th><th class="px-5 py-3 text-center">Aksi</th></tr>
+                            <tr><th class="px-5 py-3 w-10 text-center">#</th><th class="px-5 py-3">Kode & Nama Bahan</th><th class="px-5 py-3 text-center">Qty</th><th class="px-5 py-3 text-center">Aksi</th></tr>
                         </thead>
                         <tbody id="sjCartTableBody" class="divide-y divide-slate-100">
-                            <tr><td colspan="5" class="px-5 py-8 text-center text-slate-400 italic">Belum ada item ditambahkan.</td></tr>
+                            <tr><td colspan="4" class="px-5 py-8 text-center text-slate-400 italic">Belum ada item ditambahkan.</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -636,7 +606,7 @@
                             <input type="date" id="filterEndDate" onchange="filterTable()" class="border border-slate-200 bg-slate-50 rounded-lg px-3 py-2 text-sm outline-none w-full sm:w-auto shadow-sm">
                         </div>
                         <select id="filterCategory" onchange="filterTable()" class="border border-slate-200 bg-slate-50 rounded-lg px-3 py-2 text-sm outline-none w-full sm:w-auto shadow-sm">
-                            <option value="">Semua Kategori</option><option value="Frozen">Frozen</option><option value="Dry">Dry</option>
+                            <option value="">Semua Kategori</option>
                         </select>
                         
                         <div class="relative w-full sm:w-48 admin-only-element" id="wrap-filter-resto-data">
@@ -680,6 +650,7 @@
             <div class="flex overflow-x-auto hide-scroll gap-2 border-b border-slate-200 pb-2 shrink-0 mt-2">
                 <button onclick="switchSetTab('app')" id="tabBtn-app" class="px-4 py-2 text-sm font-medium rounded-lg bg-blue-50 text-blue-600 transition-colors whitespace-nowrap">Aplikasi</button>
                 <button onclick="switchSetTab('resto')" id="tabBtn-resto" class="px-4 py-2 text-sm font-medium rounded-lg text-slate-500 hover:bg-slate-50 transition-colors whitespace-nowrap">Data Resto</button>
+                <button onclick="switchSetTab('kategori')" id="tabBtn-kategori" class="px-4 py-2 text-sm font-medium rounded-lg text-slate-500 hover:bg-slate-50 transition-colors whitespace-nowrap">Kategori Bahan</button>
                 <button onclick="switchSetTab('user')" id="tabBtn-user" class="px-4 py-2 text-sm font-medium rounded-lg text-slate-500 hover:bg-slate-50 transition-colors whitespace-nowrap">Pengguna Akses</button>
                 <button onclick="switchSetTab('master')" id="tabBtn-master" class="px-4 py-2 text-sm font-medium rounded-lg text-slate-500 hover:bg-slate-50 transition-colors whitespace-nowrap">Master Data Bahan</button>
             </div>
@@ -691,7 +662,18 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div><label class="block text-sm font-medium text-slate-600 mb-1">Judul Aplikasi</label><input type="text" id="setAppTitle" class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"></div>
                         <div><label class="block text-sm font-medium text-slate-600 mb-1">Copyright Footer</label><input type="text" id="setAppCopy" class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"></div>
-                        <div><label class="block text-sm font-medium text-slate-600 mb-1">URL Logo</label><input type="text" id="setAppLogo" class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"></div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Logo Aplikasi (Max 2MB)</label>
+                            <div class="flex items-center gap-3">
+                                <div id="wrapLogoPreview" class="hidden shrink-0">
+                                    <img id="logoPreview" src="" alt="Preview" class="w-10 h-10 object-contain bg-slate-100 rounded-lg border border-slate-200 p-1">
+                                </div>
+                                <input type="file" id="setAppLogoFile" accept="image/*" class="w-full border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-blue-500 outline-none text-sm file:mr-4 file:py-1.5 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-all cursor-pointer">
+                                <input type="hidden" id="setAppLogo">
+                            </div>
+                        </div>
+
                         <div><label class="block text-sm font-medium text-slate-600 mb-1">Email Notifikasi Admin</label><input type="email" id="setAdminEmail" class="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="admin@resto.com"></div>
                     </div>
                     <button onclick="saveAppSet()" class="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-blue-700 transition w-full md:w-auto flex items-center justify-center gap-2"><i class="fa-solid fa-save"></i> <span>Simpan Perubahan</span></button>
@@ -707,6 +689,24 @@
                     </div>
                     <div class="border border-slate-200 rounded-xl overflow-x-auto mt-4">
                         <table class="w-full text-left text-sm whitespace-nowrap min-w-max"><thead class="bg-slate-50 border-b border-slate-200"><tr><th class="px-5 py-3">Nama Resto</th><th class="px-5 py-3 w-24 text-center">Aksi</th></tr></thead><tbody id="tblRestoList" class="divide-y divide-slate-100"></tbody></table>
+                    </div>
+                </div>
+                <!-- Kategori Bahan Tab -->
+                <div id="setTab-kategori" class="hidden space-y-5">
+                    <h3 class="text-lg font-bold text-slate-700 border-b pb-2">Manajemen Kategori Bahan</h3>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <input type="text" id="setNewCategory" class="w-full sm:flex-1 border border-slate-300 rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500" placeholder="Kategori Baru (Contoh: Bumbu)...">
+                        <button onclick="saveNewCategory()" class="w-full sm:w-auto shrink-0 bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-plus"></i> <span>Tambah</span>
+                        </button>
+                    </div>
+                    <div class="border border-slate-200 rounded-xl overflow-x-auto mt-4">
+                        <table class="w-full text-left text-sm whitespace-nowrap min-w-max">
+                            <thead class="bg-slate-50 border-b border-slate-200">
+                                <tr><th class="px-5 py-3">Nama Kategori</th><th class="px-5 py-3 w-24 text-center">Aksi</th></tr>
+                            </thead>
+                            <tbody id="tblCategoryList" class="divide-y divide-slate-100"></tbody>
+                        </table>
                     </div>
                 </div>
                 <!-- User Tab -->
@@ -739,7 +739,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                             <div><label class="block text-sm mb-1">Kode Bahan</label><input type="text" id="setMstKode" class="w-full border border-slate-300 rounded-lg px-3 py-2 uppercase font-mono"></div>
                             <div class="md:col-span-2"><label class="block text-sm mb-1">Nama Bahan</label><input type="text" id="setMstNama" class="w-full border border-slate-300 rounded-lg px-3 py-2"></div>
-                            <div><label class="block text-sm mb-1">Kategori</label><select id="setMstKat" class="w-full border border-slate-300 rounded-lg px-3 py-2"><option value="Frozen">Frozen</option><option value="Dry">Dry</option></select></div>
+                            <div><label class="block text-sm mb-1">Kategori</label><select id="setMstKat" class="w-full border border-slate-300 rounded-lg px-3 py-2"></select></div>
                             <div class="md:col-span-2"><label class="block text-sm mb-1">Pilihan Resto</label><select id="setMstResto" class="w-full border border-slate-300 rounded-lg px-3 py-2 set-resto-select"></select></div>
                         </div>
                         <div class="p-4 border border-blue-200 bg-blue-50/50 rounded-lg flex flex-col md:flex-row gap-3">
@@ -761,7 +761,7 @@
         // --- REAL STATE MANAGEMENT ---
         const State = {
             user: null, settings: {}, restos: [], users: [], masterData: [], stockData: [],
-            inHistory: [], outHistory: [], adjustments: [],
+            inHistory: [], outHistory: [], adjustments: [], categories: [],
             currentView: 'dashboard', transactionType: 'inbound',
             
             // Checkbox Filter State for Dashboard, Datatable & Scan History
@@ -780,7 +780,7 @@
         };
 
         // === Konfigurasi API URL ===
-        const API_URL = "https://script.google.com/macros/s/AKfycbyDhgrBBV_9ns7pMjh0d1nWABnNTSyfiIo22hJNyjRyRYK9ZMALnt72XQH5VzcFf6PR/exec";
+        const API_URL = "https://script.google.com/macros/s/AKfycbwWtH8DddgtVyyNm1EIXw9Em3L8FkauJQ6kzWlaYlfKJ0pgs6EM_kR0ghZVtsCdlXojEw/exec";
 
         // Fungsi komunikasi dengan Google Apps Script via API Fetch
         const runGas = async (func, ...args) => {
@@ -812,6 +812,8 @@
 
             runGas('getAppData').then(data => {
                 syncLocalState(data);
+                populateCategoryDropdowns(); // Populate the new dynamic categories
+                
                 State.selectedRestosDash = [...State.restos]; 
                 State.selectedRestosData = [...State.restos];
                 State.selectedRestosScan = [...State.restos];
@@ -866,6 +868,24 @@
         function toggleDropdown(id) {
             const dd = document.getElementById(id); if(dd) dd.classList.toggle('hidden');
         }
+        
+        // --- POPULATE DYNAMIC CATEGORIES ---
+        function populateCategoryDropdowns() {
+            if (!State.categories || State.categories.length === 0) {
+                State.categories = ['Buah', 'Sayur', 'Bahan Baku']; // Default requirements
+            }
+            const opts = State.categories.map(c => `<option value="${c}">${c}</option>`).join('');
+            const filterOpts = `<option value="">Semua Kategori</option>` + opts;
+
+            const fc = document.getElementById('filterCategory');
+            if(fc) fc.innerHTML = filterOpts;
+
+            const sc = document.getElementById('scanHistCategory');
+            if(sc) sc.innerHTML = filterOpts;
+
+            const mk = document.getElementById('setMstKat');
+            if(mk) mk.innerHTML = opts;
+        }
 
         // FUNGSI SINKRONISASI - Diberi fallback object aman
         function syncLocalState(data, keepLocalStock = false) {
@@ -875,6 +895,8 @@
             State.restos = data.restos || State.restos || []; 
             State.users = data.users || State.users || [];
             State.masterData = data.master || State.masterData || []; 
+            
+            State.categories = data.categories || State.categories || ['Buah', 'Sayur', 'Bahan Baku'];
             
             if (!keepLocalStock) {
                 let rawStock = data.stock || [];
@@ -886,22 +908,13 @@
                     let kat = String(s.Kategori || s.kategori || '').trim();
                     let rs = String(s.Resto || s.Lokasi || s.resto || '').trim();
                     
-                    let kl = String(s.KodeLot || s['Kode Lot'] || s.Lot || s.lot || '').trim();
-                    let kp = String(s.KodeProduksi || s['Kode Produksi'] || s.Produksi || s.produksi || '').trim();
-                    let ke = String(s.ExpDate || s['Expired Date'] || s['Exp Date'] || s.Expired || s.exp || '').trim();
-                    
-                    if (kl === '') kl = '-';
-                    if (kp === '') kp = '-';
-                    if (ke === '') ke = '-';
-                    
-                    let key = `${kb.toUpperCase()}_${rs.toUpperCase()}_${kl.toUpperCase()}_${kp.toUpperCase()}_${ke.toUpperCase()}`;
+                    let key = `${kb.toUpperCase()}_${rs.toUpperCase()}`;
                     
                     if(!groupedStock[key]) {
                         groupedStock[key] = {
                             KodeBahan: kb, NamaBahan: nm || s.NamaBahan, Kategori: kat || s.Kategori, Resto: rs, 
                             QtyKecil: s.QtyKecil || s['Stock Kecil'] || s.Qty || '', 
-                            QtyBesar: s.QtyBesar || s['Stock Besar'] || '', 
-                            KodeLot: kl, KodeProduksi: kp, ExpDate: ke
+                            QtyBesar: s.QtyBesar || s['Stock Besar'] || ''
                         };
                     } else {
                         let currKecilStr = String(groupedStock[key].QtyKecil || '');
@@ -947,6 +960,7 @@
 
             runGas('getAppData').then(data => {
                 syncLocalState(data, false); 
+                populateCategoryDropdowns();
                 
                 if (State.currentView === 'dashboard') {
                     refreshDashboard();
@@ -957,22 +971,12 @@
                     renderRestoTable(); 
                     renderUserTable(); 
                     renderMasterTable();
+                    renderCategoryTable();
                 } else if (State.currentView === 'pengiriman') {
                     setupDropdownBahan('sj');
                 } else {
                     if (State.currentView === 'database') {
                         State.tableData = State.user.role === 'Admin' ? State.stockData : State.stockData.filter(s => s.Resto === State.user.resto);
-                    } else if (State.currentView === 'expired') {
-                        const today = new Date();
-                        const processed = State.stockData.filter(s => s.ExpDate && s.ExpDate !== '-').map(s => {
-                            const expD = new Date(s.ExpDate);
-                            const diffDays = Math.ceil((expD - today) / (1000 * 60 * 60 * 24));
-                            let status = 'Aman';
-                            if (diffDays <= 0) status = 'Expired'; else if (diffDays <= 30) status = 'Warning';
-                            return {...s, SisaHari: diffDays, Status: status};
-                        });
-                        processed.sort((a,b) => a.SisaHari - b.SisaHari);
-                        State.tableData = State.user.role === 'Admin' ? processed : processed.filter(s => s.Resto === State.user.resto);
                     } else if (State.currentView === 'adjustment') {
                         State.tableData = State.user.role === 'Admin' ? State.adjustments : State.adjustments.filter(s => s.Resto === State.user.resto);
                     }
@@ -1010,16 +1014,15 @@
             { id: 'database', icon: 'fa-database', label: 'Database Stock', roles: ['Admin', 'Admin Warehouse', 'Manager', 'Store Manager', 'Stocker'] },
             { id: 'inbound', icon: 'fa-boxes-packing', label: 'Barang Masuk', roles: ['Admin', 'Manager', 'Store Manager', 'Stocker'] },
             { id: 'outbound', icon: 'fa-truck-fast', label: 'Barang Keluar', roles: ['Admin', 'Admin Warehouse', 'Manager', 'Store Manager', 'Stocker'] },
-            { id: 'expired', icon: 'fa-triangle-exclamation', label: 'Expired Bahan', roles: ['Admin', 'Manager', 'Store Manager', 'Stocker'] },
             { id: 'adjustment', icon: 'fa-scale-balanced', label: 'Adjustment', roles: ['Admin', 'Store Manager'] },
             { id: 'settings', icon: 'fa-gear', label: 'Settings', roles: ['Admin'] }
         ];
 
         function applySettings() {
             document.getElementById('loginTitle').textContent = State.settings.app_title || 'Inventory Login';
-            document.title = State.settings.app_title || 'Indi Apps';
+            document.title = State.settings.app_title || 'Hanam Hanum';
             
-            const logoUrl = State.settings.logo_url || 'https://s6.imgcdn.dev/YfkbUy.png';
+            const logoUrl = State.settings.logo_url || 'https://s6.imgcdn.dev/Y3dmj8.png';
             document.getElementById('loginLogo').src = logoUrl;
             document.getElementById('appLogo').src = logoUrl;
             document.getElementById('mobileAppLogo').src = logoUrl;
@@ -1055,7 +1058,6 @@
                     }
 
                     State.user = res.user;
-                    // Jika admin / warehouse, akses semua resto. 
                     const r = (State.user.role === 'Admin' || State.user.role === 'Admin Warehouse') ? [...State.restos] : [State.user.resto];
                     State.selectedRestosDash = [...r]; State.selectedRestosData = [...r]; State.selectedRestosScan = [...r];
 
@@ -1210,10 +1212,20 @@
                 const fOut = State.outHistory.filter(t => filterDataLogic(t.Tanggal, t.Resto, sDate, eDate, selRestos));
                 const fStock = State.stockData.filter(s => selRestos.length === 0 || selRestos.includes(s.Resto));
 
-                let inStats = {}; let outStats = {}; let f=0; let d=0;
+                let inStats = {}; let outStats = {}; 
                 fIn.forEach(trx => inStats[trx.Satuan] = (inStats[trx.Satuan]||0) + parseInt(trx.Qty));
                 fOut.forEach(trx => outStats[trx.Satuan] = (outStats[trx.Satuan]||0) + Math.abs(parseInt(trx.Qty)));
-                fStock.forEach(s => { if(s.Kategori==='Frozen') f++; else d++; });
+                
+                // Menghitung jumlah per kategori dinamis
+                let catStats = {};
+                State.categories.forEach(c => catStats[c] = 0);
+                fStock.forEach(s => {
+                    if (catStats[s.Kategori] !== undefined) {
+                        catStats[s.Kategori]++;
+                    } else {
+                        catStats[s.Kategori] = 1; // Jika ada bahan yang belum dikategorikan atau kat lama
+                    }
+                });
 
                 const formatHtml = (stats) => {
                     const ent = Object.entries(stats).sort((a,b)=>b[1]-a[1]);
@@ -1224,12 +1236,32 @@
 
                 document.getElementById('dashTotalInUnits').innerHTML = formatHtml(inStats);
                 document.getElementById('dashTotalOutUnits').innerHTML = formatHtml(outStats);
-                document.getElementById('dashFrozenCount').innerHTML = `${f} <span class="text-sm font-normal">Item</span>`;
-                document.getElementById('dashDryCount').innerHTML = `${d} <span class="text-sm font-normal">Item</span>`;
+                
+                // --- Generate Kartu Khusus Store Dinamis ---
+                const dynContainer = document.getElementById('placeholderDynamicCards');
+                if(dynContainer) {
+                    const cardThemes = [
+                        {bg: 'from-blue-500 to-cyan-600', shadow: 'shadow-blue-500/20', icon: 'fa-apple-whole', txt: 'text-blue-100'},
+                        {bg: 'from-amber-500 to-orange-600', shadow: 'shadow-amber-500/20', icon: 'fa-leaf', txt: 'text-amber-100'},
+                        {bg: 'from-indigo-500 to-purple-600', shadow: 'shadow-indigo-500/20', icon: 'fa-cubes-stacked', txt: 'text-indigo-100'},
+                        {bg: 'from-rose-500 to-pink-600', shadow: 'shadow-rose-500/20', icon: 'fa-box', txt: 'text-rose-100'},
+                        {bg: 'from-emerald-500 to-teal-600', shadow: 'shadow-emerald-500/20', icon: 'fa-boxes-packing', txt: 'text-emerald-100'}
+                    ];
+                    
+                    dynContainer.innerHTML = State.categories.map((cat, i) => {
+                        const theme = cardThemes[i % cardThemes.length];
+                        return `<div class="bg-gradient-to-br ${theme.bg} rounded-2xl p-5 text-white shadow-lg ${theme.shadow} relative overflow-hidden transition-all hover:-translate-y-1">
+                            <div class="absolute -right-4 -top-4 opacity-20"><i class="fa-solid ${theme.icon} text-7xl"></i></div>
+                            <p class="${theme.txt} text-sm font-medium mb-1">Bahan ${cat}</p>
+                            <h3 class="text-3xl font-bold mb-2">${catStats[cat] || 0} <span class="text-sm font-normal">Item</span></h3>
+                            <p class="text-xs ${theme.txt}">Tersedia di Database</p>
+                        </div>`;
+                    }).join('');
+                }
 
                 // Mengubah UI berdasarkan Role (Warehouse vs Store)
                 if (State.user.role === 'Admin Warehouse') {
-                    document.querySelectorAll('.store-only-card').forEach(el => el.classList.add('hidden'));
+                    if(dynContainer) dynContainer.classList.add('hidden');
                     document.querySelectorAll('.wh-only-card').forEach(el => el.classList.remove('hidden'));
                     
                     let sjAktif = 0; let sjSelesai = 0;
@@ -1240,7 +1272,7 @@
                     document.getElementById('dashSjCount').innerHTML = `${sjAktif} <span class="text-sm font-normal">Dokumen</span>`;
                     document.getElementById('dashSjDoneCount').innerHTML = `${sjSelesai} <span class="text-sm font-normal">Dokumen</span>`;
                 } else {
-                    document.querySelectorAll('.store-only-card').forEach(el => el.classList.remove('hidden'));
+                    if(dynContainer) dynContainer.classList.remove('hidden');
                     document.querySelectorAll('.wh-only-card').forEach(el => el.classList.add('hidden'));
                 }
 
@@ -1249,7 +1281,7 @@
                 State.dashRecentPage = 1;
                 
                 renderDashRecentTable();
-                updateChartsWithData(fIn, fOut, f, d, chartFilter, chartTypeFilter);
+                updateChartsWithData(fIn, fOut, catStats, chartFilter, chartTypeFilter);
                 els.forEach(el => el.classList.remove('updating'));
             }, 300);
         }
@@ -1313,15 +1345,26 @@
             const ctxP = document.getElementById('pieChart').getContext('2d');
             pieChartInst = new Chart(ctxP, { 
                 type: 'doughnut', 
-                data: { labels: ['Frozen','Dry'], datasets: [{data:[0,0], backgroundColor:['#3b82f6','#f59e0b'], borderWidth:0}] }, 
+                data: { labels: [], datasets: [{data:[], backgroundColor:[], borderWidth:0}] }, 
                 options: {responsive:true, maintainAspectRatio:false, cutout:'75%', plugins: {legend:{display:false}}} 
             });
         }
 
-        function updateChartsWithData(inData, outData, countFrozen, countDry, chartFilter, chartTypeFilter) {
+        function updateChartsWithData(inData, outData, catStats, chartFilter, chartTypeFilter) {
             if(pieChartInst) {
-                pieChartInst.data.datasets[0].data = [countFrozen, countDry];
+                const labels = State.categories || ['Buah', 'Sayur', 'Bahan Baku'];
+                const data = labels.map(c => catStats[c] || 0);
+                const bgColors = ['#3b82f6', '#f59e0b', '#10b981', '#ef4444', '#8b5cf6', '#ec4899'];
+                
+                pieChartInst.data.labels = labels;
+                pieChartInst.data.datasets[0].data = data;
+                pieChartInst.data.datasets[0].backgroundColor = bgColors.slice(0, labels.length);
                 pieChartInst.update();
+
+                const legend = document.getElementById('pieChartLegend');
+                if(legend) {
+                    legend.innerHTML = labels.map((l, i) => `<div class="flex items-center gap-1.5"><div class="w-3 h-3 rounded-full shadow-sm" style="background-color: ${bgColors[i%bgColors.length]}"></div> ${l}</div>`).join('');
+                }
             }
 
             if(!mainChartInst) return;
@@ -1365,7 +1408,7 @@
 
         // --- FUNGSI KAMERA SCANNER (MULTI-PURPOSE) ---
         let html5QrCode = null;
-        let activeScannerTarget = ''; // 'frm' (Manual Form), 'sj' (Cart SJ), 'sj_number' (Input No SJ), 'inbound_sj' (Cari SJ)
+        let activeScannerTarget = ''; 
 
         function openScanner(targetPrefix) {
             activeScannerTarget = targetPrefix;
@@ -1403,13 +1446,12 @@
         }
 
         function onScanSuccess(decodedText, decodedResult) {
-            // Hentikan scanner dengan aman sebelum memanipulasi DOM/SweetAlert
             if (html5QrCode && html5QrCode.isScanning) {
                 html5QrCode.stop().then(() => {
                     processScanResult(decodedText);
                 }).catch(err => {
                     console.log(err);
-                    processScanResult(decodedText); // Tetap lanjut meskipun gagal stop stream
+                    processScanResult(decodedText); 
                 });
             } else {
                 processScanResult(decodedText);
@@ -1423,21 +1465,17 @@
             
             const text = String(decodedText).trim().toUpperCase();
             
-            if(State.scannerTarget === 'sj_number_out') {
+            if(activeScannerTarget === 'sj_number') {
                 document.getElementById('sjNumber').value = text;
                 return;
-            } else if (State.scannerTarget === 'sj_number_in') {
+            } else if (activeScannerTarget === 'inbound_sj') {
                 document.getElementById('inboundSearchSj').value = text; 
-                searchSjToReceive();
+                fetchSuratJalanForInbound();
                 return;
             }
 
-            // Menentukan prefix form tujuan berdasarkan target tombol scanner
-            let prefix = 'frm'; // Default ke form input manual
-            if (State.scannerTarget === 'item_sj') prefix = 'sj';
-            else if (State.scannerTarget === 'item_manual') prefix = 'frm';
+            let prefix = activeScannerTarget || 'frm'; 
 
-            // Dapatkan Resto yang sedang aktif di form tersebut
             let selectedResto = '';
             const restoElement = document.getElementById(prefix === 'sj' ? 'sjResto' : 'frmResto');
             if (restoElement) selectedResto = restoElement.value.trim().toUpperCase();
@@ -1446,14 +1484,12 @@
                 selectedResto = State.user.resto.toUpperCase();
             }
 
-            // Cari bahan di Master Data yang sesuai dengan Barcode dan Resto
             const item = State.masterData.find(m => 
                 String(m.KodeBahan).trim().toUpperCase() === text && 
                 (selectedResto === '' || String(m.Resto).trim().toUpperCase() === selectedResto || String(m.Resto).trim().toUpperCase() === 'SEMUA RESTO')
             );
 
             if (item) {
-                // Panggil fungsi selectBahan dengan 3 argumen yang benar (kode, nama, prefix_form)
                 selectBahan(item.KodeBahan, item.NamaBahan.replace(/'/g, "\\'"), prefix);
             } else {
                 Swal.fire({icon:'warning', title:'Tidak Ditemukan', text:`Barcode [${text}] tidak terdaftar di Master Data untuk resto ini.`, toast:true, position:'top', timer:3500});
@@ -1476,8 +1512,7 @@
             } catch (e) {}
         }
 
-
-        // --- CUSTOM DROPDOWN BAHAN LOGIC (SUPPORT PREFIX) ---
+        // --- CUSTOM DROPDOWN BAHAN LOGIC ---
         function setupDropdownBahan(prefix) {
             let resto = '';
             if (prefix === 'frm') resto = document.getElementById('frmResto') ? document.getElementById('frmResto').value : '';
@@ -1548,9 +1583,6 @@
                 if(prefix === 'frm' && State.transactionType === 'outbound') {
                     const sys = document.getElementById('frmStockSystem'); if(sys) sys.textContent = "0";
                     const bsr = document.getElementById('frmStockBesar'); if(bsr) bsr.textContent = "";
-                    const lot = document.getElementById('frmLot'); if(lot) lot.innerHTML = '<option value="-">-</option>';
-                    const prod = document.getElementById('frmProd'); if(prod) prod.innerHTML = '<option value="-">-</option>';
-                    const exp = document.getElementById('frmExp'); if(exp) exp.innerHTML = '<option value="-">-</option>';
                 }
             }
         }
@@ -1563,7 +1595,6 @@
             processBahanSelection(kode, prefix); 
         }
 
-        // Logic saat bahan dipilih dari dropdown
         function processBahanSelection(scanText, prefix) {
             let selectedResto = '';
             if (prefix === 'frm') selectedResto = document.getElementById('frmResto').value.trim().toUpperCase();
@@ -1581,36 +1612,7 @@
                     sel.disabled = false;
                 }
                 
-                // Khusus Form Outbound Manual (Bukan SJ)
                 if(prefix === 'frm' && State.transactionType === 'outbound') {
-                    const stocks = State.stockData.filter(s => String(s.KodeBahan).trim().toUpperCase() === scanText && String(s.Resto).trim().toUpperCase() === selectedResto);
-                    
-                    let uLots = [...new Set(stocks.map(s => s.KodeLot).filter(v => v && v !== '-'))];
-                    let uProds = [...new Set(stocks.map(s => s.KodeProduksi).filter(v => v && v !== '-'))];
-                    let uExps = [...new Set(stocks.map(s => s.ExpDate).filter(v => v && v !== '-'))];
-
-                    stocks.sort((a, b) => {
-                        if (a.ExpDate === '-' && b.ExpDate === '-') return 0;
-                        if (a.ExpDate === '-') return 1;
-                        if (b.ExpDate === '-') return -1;
-                        return new Date(a.ExpDate) - new Date(b.ExpDate);
-                    });
-                    uExps.sort((a, b) => new Date(a) - new Date(b));
-
-                    if(uLots.length === 0) uLots.push('-'); if(uProds.length === 0) uProds.push('-'); if(uExps.length === 0) uExps.push('-');
-
-                    const formatOpt = (v) => v === '-' ? `<option value="-">-</option>` : `<option value="${v}">${v} (${selectedResto})</option>`;
-
-                    document.getElementById('frmLot').innerHTML = uLots.map(formatOpt).join('');
-                    document.getElementById('frmProd').innerHTML = uProds.map(formatOpt).join('');
-                    document.getElementById('frmExp').innerHTML = uExps.map(formatOpt).join('');
-                    
-                    if (stocks.length > 0) {
-                        const fefoStock = stocks[0];
-                        document.getElementById('frmLot').value = fefoStock.KodeLot || '-';
-                        document.getElementById('frmProd').value = fefoStock.KodeProduksi || '-';
-                        document.getElementById('frmExp').value = fefoStock.ExpDate || '-';
-                    }
                     updateOutboundStockDisplay();
                 }
 
@@ -1641,7 +1643,6 @@
             renderSjHistory();
         }
 
-        // Event listener saat Resto tujuan berubah, reset form item
         document.addEventListener('change', e => {
             if(e.target && e.target.id === 'sjResto') {
                 document.getElementById('sjSearchBahan').value = '';
@@ -1663,8 +1664,6 @@
             const kat = document.getElementById('sjKategori').value;
             const qty = document.getElementById('sjQty').value;
             const satuan = document.getElementById('sjSatuan').value;
-            const prod = document.getElementById('sjProd').value || '-';
-            let exp = document.getElementById('sjExp').value || '-';
 
             if (!kode || !qty || qty <= 0) {
                 return Swal.fire('Oops...', 'Kode Bahan dan Qty wajib diisi dengan benar.', 'warning');
@@ -1672,15 +1671,12 @@
 
             State.sjCart.push({
                 kode: kode, nama: nama, kategori: kat, qty: parseFloat(qty), satuan: satuan, 
-                produksi: prod, exp: exp, lot: '-' // Lot dikosongkan karena diisi oleh tujuan
+                produksi: '-', exp: '-', lot: '-' 
             });
 
-            // Reset Item Form
             document.getElementById('sjSearchBahan').value = '';
             document.getElementById('sjKodeBahan').value = '';
             document.getElementById('sjQty').value = '';
-            document.getElementById('sjProd').value = '';
-            document.getElementById('sjExp').value = '';
             document.getElementById('sjSatuan').innerHTML = '';
 
             renderSjCart();
@@ -1697,7 +1693,7 @@
             const btnSubmit = document.getElementById('btnSubmitSj');
 
             if (State.sjCart.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="px-5 py-8 text-center text-slate-400 italic">Belum ada item ditambahkan.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="4" class="px-5 py-8 text-center text-slate-400 italic">Belum ada item ditambahkan.</td></tr>`;
                 totalEl.textContent = '0';
                 btnSubmit.disabled = true;
                 return;
@@ -1711,7 +1707,6 @@
                         <div class="text-[10px] text-slate-500 font-mono">${item.kode}</div>
                     </td>
                     <td class="px-5 py-3 text-center font-bold text-blue-600">${item.qty} <span class="font-normal text-xs text-slate-500">${item.satuan}</span></td>
-                    <td class="px-5 py-3 text-center text-xs">P: ${item.produksi}<br>E: ${item.exp}</td>
                     <td class="px-5 py-3 text-center">
                         <button onclick="removeSjCartItem(${i})" class="text-red-500 hover:bg-red-50 p-1.5 rounded"><i class="fa-solid fa-trash"></i></button>
                     </td>
@@ -1738,7 +1733,6 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             
-            // Header SJ
             doc.setFontSize(18);
             doc.text("SURAT JALAN (DELIVERY ORDER)", 14, 20);
             
@@ -1748,10 +1742,9 @@
             doc.text(`Resto Tujuan    : ${sj.restoTujuan}`, 14, 40);
             doc.text(`Pengirim        : ${sj.pengirim}`, 14, 45);
 
-            // Table SJ
-            const headers = [['No', 'Kode Bahan', 'Nama Bahan', 'Qty', 'Satuan', 'Prod Date', 'Exp Date']];
+            const headers = [['No', 'Kode Bahan', 'Nama Bahan', 'Qty', 'Satuan']];
             const body = sj.items.map((item, i) => [
-                i + 1, item.kode, item.nama, item.qty, item.satuan, item.produksi || '-', item.exp || '-'
+                i + 1, item.kode, item.nama, item.qty, item.satuan
             ]);
 
             doc.autoTable({
@@ -1763,7 +1756,6 @@
                 styles: { fontSize: 9 }
             });
 
-            // Signatures
             const finalY = doc.lastAutoTable.finalY || 55;
             doc.text("Diterima Oleh,", 30, finalY + 20);
             doc.text("(.........................)", 20, finalY + 45);
@@ -1818,13 +1810,12 @@
                         renderSjCart();
                         renderSjHistory();
                     }).catch(e => {
-                        // Simulasi jika server belum menerapkan update SJ DB
                         State.suratJalanList.push(payloadSj);
                         let promises = [];
                         State.sjCart.forEach(item => {
                             const outPayload = {
                                 kode: item.kode, nama: item.nama, kategori: item.kategori, qty: "-" + item.qty, satuan: item.satuan,
-                                lot: '-', produksi: item.produksi, exp: item.exp, petugas: State.user.name, resto: State.user.resto
+                                lot: '-', produksi: '-', exp: '-', petugas: State.user.name, resto: State.user.resto
                             };
                             promises.push(runGas('saveTransaction', 'outbound', outPayload));
                         });
@@ -1855,7 +1846,6 @@
             const tbody = document.getElementById('sjHistoryTableBody');
             if(!tbody) return;
 
-            // Sort by Tanggal descending
             const sortedSJ = [...State.suratJalanList].sort((a,b) => new Date(b.tanggal) - new Date(a.tanggal));
 
             if (sortedSJ.length === 0) {
@@ -1888,10 +1878,9 @@
             document.getElementById('scanPageTitle').textContent = type === 'inbound' ? 'Input Barang Masuk' : 'Input Barang Keluar';
             document.getElementById('scanHistTitle').textContent = type === 'inbound' ? 'Riwayat Barang Masuk' : 'Riwayat Barang Keluar';
             
-            // Konfigurasi Inbound Modal (Toggle SJ vs Manual)
             if (type === 'inbound') {
                 document.getElementById('inboundModeToggle').classList.remove('hidden');
-                switchInboundMode('manual'); // Default
+                switchInboundMode('manual');
             } else {
                 document.getElementById('inboundModeToggle').classList.add('hidden');
                 document.getElementById('containerInboundSj').classList.add('hidden');
@@ -1913,14 +1902,10 @@
                 document.getElementById('stockInfoWrap').classList.remove('hidden');
                 document.getElementById('btnSubmitTrx').classList.replace('bg-blue-600', 'bg-rose-600');
                 document.getElementById('btnSubmitTrx').classList.replace('hover:bg-blue-700', 'hover:bg-rose-700');
-                
-                const selClass = "w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none bg-white transition-all";
-                document.getElementById('boxLot').innerHTML = `<label class="block text-xs font-medium text-slate-500 mb-1">Kode Lot (Pilih)</label><select id="frmLot" class="${selClass}" onchange="handleBatchChange('lot')"><option value="-">-</option></select>`;
-                document.getElementById('boxProd').innerHTML = `<label class="block text-xs font-medium text-slate-500 mb-1">Kode Produksi (Pilih)</label><select id="frmProd" class="${selClass}" onchange="handleBatchChange('prod')"><option value="-">-</option></select>`;
-                document.getElementById('boxExp').innerHTML = `<label class="block text-xs font-medium text-slate-500 mb-1">Expired Date (Pilih)</label><select id="frmExp" class="${selClass}" onchange="handleBatchChange('exp')"><option value="-">-</option></select>`;
             }
 
             buildCheckboxDropdown('scan', 'scan');
+            populateCategoryDropdowns();
             initScanHistory();
             
             setupDropdownBahan('frm');
@@ -1953,14 +1938,12 @@
             const inputSj = document.getElementById('inboundSearchSj').value.trim().toUpperCase();
             if (!inputSj) return Swal.fire('Info', 'Ketik nomor Surat Jalan terlebih dahulu', 'info');
 
-            // Cari di state lokal Surat Jalan
             const sj = State.suratJalanList.find(s => s.id === inputSj);
             
             const resultBox = document.getElementById('inboundSjResult');
             const tbody = document.getElementById('inboundSjTableBody');
             
             if (sj) {
-                // Verifikasi tujuan
                 if (State.user.role !== 'Admin' && sj.restoTujuan !== State.user.resto) {
                     return Swal.fire('Akses Ditolak', 'Surat Jalan ini tidak ditujukan untuk restoran Anda.', 'error');
                 }
@@ -1975,10 +1958,6 @@
                             <div class="text-[10px] text-slate-500 font-mono">${item.kode}</div>
                         </td>
                         <td class="px-4 py-3 font-bold text-blue-600">${item.qty} <span class="font-normal text-xs text-slate-500">${item.satuan}</span></td>
-                        <td class="px-4 py-3 text-xs">P: ${item.produksi}<br>E: ${item.exp}</td>
-                        <td class="px-4 py-3 bg-amber-50">
-                            <input type="text" id="inboundLot_${idx}" class="w-full border border-amber-200 rounded px-2 py-1 text-sm focus:ring-2 focus:ring-amber-500 outline-none uppercase" placeholder="Input Lot" required>
-                        </td>
                     </tr>
                 `).join('');
 
@@ -1993,23 +1972,15 @@
         function processInboundSj() {
             if (!activeInboundSjData) return;
 
-            // Validasi Lot Input
-            let valid = true;
             let finalItemsToProcess = [];
 
             for (let i = 0; i < activeInboundSjData.items.length; i++) {
                 const item = activeInboundSjData.items[i];
-                const lotInput = document.getElementById(`inboundLot_${i}`).value.trim().toUpperCase();
-                
-                if (!lotInput) { valid = false; break; }
-                
                 finalItemsToProcess.push({
                     kode: item.kode, nama: item.nama, kategori: item.kategori, qty: item.qty, satuan: item.satuan,
-                    lot: lotInput, produksi: item.produksi, exp: item.exp, petugas: State.user.name, resto: State.user.resto
+                    lot: '-', produksi: '-', exp: '-', petugas: State.user.name, resto: State.user.resto
                 });
             }
-
-            if (!valid) return Swal.fire('Peringatan', 'Mohon isi semua "Kode Lot" untuk setiap bahan.', 'warning');
 
             Swal.fire({
                 title: 'Terima Barang?',
@@ -2029,13 +2000,11 @@
                         
                         initScanHistory();
                     }).catch(e => {
-                        // Fallback Simulasi jika backend tidak mendukung endpoint
                         let promises = [];
                         finalItemsToProcess.forEach(payload => {
                             promises.push(runGas('saveTransaction', 'inbound', payload));
                         });
                         
-                        // Update status lokal
                         const sjIndex = State.suratJalanList.findIndex(s => s.id === activeInboundSjData.id);
                         if (sjIndex > -1) State.suratJalanList[sjIndex].status = 'Diterima';
 
@@ -2060,74 +2029,15 @@
             setupDropdownBahan('frm');
         }
 
-        function handleBatchChange(changedField) {
-            if(State.transactionType !== 'outbound') return;
-            const kode = document.getElementById('frmKodeBahan').value.trim().toUpperCase();
-            const resto = document.getElementById('frmResto').value.trim().toUpperCase();
-            
-            const lotEl = document.getElementById('frmLot');
-            const prodEl = document.getElementById('frmProd');
-            const expEl = document.getElementById('frmExp');
-            
-            if(!lotEl || !prodEl || !expEl || !kode) return;
-            
-            const lot = lotEl.value;
-            const prod = prodEl.value;
-            const exp = expEl.value;
-            
-            let stocks = State.stockData.filter(s => 
-                String(s.KodeBahan).trim().toUpperCase() === kode && 
-                String(s.Resto).trim().toUpperCase() === resto
-            );
-            
-            stocks.sort((a, b) => {
-                if (a.ExpDate === '-' && b.ExpDate === '-') return 0;
-                if (a.ExpDate === '-') return 1;
-                if (b.ExpDate === '-') return -1;
-                return new Date(a.ExpDate) - new Date(b.ExpDate);
-            });
-
-            if (changedField === 'lot' && lot !== '-') {
-                const matches = stocks.filter(s => String(s.KodeLot).trim().toUpperCase() === String(lot).trim().toUpperCase());
-                if(matches.length > 0) {
-                    const match = matches[0]; 
-                    if(prodEl.querySelector(`option[value="${match.KodeProduksi}"]`)) prodEl.value = match.KodeProduksi;
-                    if(expEl.querySelector(`option[value="${match.ExpDate}"]`)) expEl.value = match.ExpDate;
-                }
-            } else if (changedField === 'prod' && prod !== '-') {
-                const matches = stocks.filter(s => String(s.KodeProduksi).trim().toUpperCase() === String(prod).trim().toUpperCase());
-                if(matches.length > 0) {
-                    const match = matches[0];
-                    if(lotEl.querySelector(`option[value="${match.KodeLot}"]`)) lotEl.value = match.KodeLot;
-                    if(expEl.querySelector(`option[value="${match.ExpDate}"]`)) expEl.value = match.ExpDate;
-                }
-            } else if (changedField === 'exp' && exp !== '-') {
-                const matches = stocks.filter(s => String(s.ExpDate).trim().toUpperCase() === String(exp).trim().toUpperCase());
-                if(matches.length > 0) {
-                    const match = matches[0];
-                    if(lotEl.querySelector(`option[value="${match.KodeLot}"]`)) lotEl.value = match.KodeLot;
-                    if(prodEl.querySelector(`option[value="${match.KodeProduksi}"]`)) prodEl.value = match.KodeProduksi;
-                }
-            }
-
-            updateOutboundStockDisplay();
-        }
-
         function updateOutboundStockDisplay() {
             if(State.transactionType !== 'outbound') return;
             
             const kode = document.getElementById('frmKodeBahan').value.trim().toUpperCase();
             const resto = document.getElementById('frmResto').value.trim().toUpperCase();
-            const lot = document.getElementById('frmLot') ? document.getElementById('frmLot').value.trim().toUpperCase() : '-';
-            const prod = document.getElementById('frmProd') ? document.getElementById('frmProd').value.trim().toUpperCase() : '-';
-            const exp = document.getElementById('frmExp') ? document.getElementById('frmExp').value.trim().toUpperCase() : '-';
             
             const stock = State.stockData.find(s => 
                 String(s.KodeBahan).trim().toUpperCase() === kode && 
-                String(s.Resto).trim().toUpperCase() === resto && 
-                String(s.KodeLot).trim().toUpperCase() === lot && 
-                String(s.KodeProduksi).trim().toUpperCase() === prod && 
-                String(s.ExpDate).trim().toUpperCase() === exp
+                String(s.Resto).trim().toUpperCase() === resto
             );
 
             const selSatuan = document.getElementById('frmSatuan');
@@ -2153,7 +2063,7 @@
                     sys.classList.add('text-blue-600');
                 } else {
                     sys.textContent = "0 " + satuanKecil;
-                    bsr.textContent = (lot !== '-' || prod !== '-' || exp !== '-') ? "(Batch Tidak Tersedia / 0)" : "";
+                    bsr.textContent = "";
                     sys.classList.remove('text-blue-600', 'text-slate-800');
                     sys.classList.add('text-rose-500'); 
                 }
@@ -2182,13 +2092,16 @@
             const sel = document.getElementById('frmSatuan');
             if(sel) { sel.innerHTML = ''; sel.disabled = true; }
             
+            const frmTanggal = document.getElementById('frmTanggal');
+            if(frmTanggal) {
+                const now = new Date();
+                now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+                frmTanggal.value = now.toISOString().slice(0,16);
+            }
+            
             if(State.transactionType === 'outbound') {
                 const sys = document.getElementById('frmStockSystem'); if(sys) sys.textContent = "0";
                 const bsr = document.getElementById('frmStockBesar'); if(bsr) bsr.textContent = "";
-                
-                const lot = document.getElementById('frmLot'); if(lot) lot.innerHTML = '<option value="-">-</option>';
-                const prod = document.getElementById('frmProd'); if(prod) prod.innerHTML = '<option value="-">-</option>';
-                const exp = document.getElementById('frmExp'); if(exp) exp.innerHTML = '<option value="-">-</option>';
             }
         }
 
@@ -2197,16 +2110,15 @@
             const rawQty = document.getElementById('frmQty').value;
             
             const payload = {
+                tanggal: document.getElementById('frmTanggal').value,
                 kode: document.getElementById('frmKodeBahan').value.trim(), 
                 nama: document.getElementById('frmNamaBahan').value.trim(),
                 kategori: document.getElementById('frmKategori').value, 
                 qty: State.transactionType === 'outbound' ? "-" + rawQty : rawQty,
                 satuan: document.getElementById('frmSatuan').value, 
-                lot: document.getElementById('frmLot').value || '-',
-                produksi: document.getElementById('frmProd').value || '-', 
-                exp: document.getElementById('frmExp').value || '-',
                 petugas: State.user.name, 
-                resto: document.getElementById('frmResto').value 
+                resto: document.getElementById('frmResto').value,
+                lot: '-', produksi: '-', exp: '-' // Fallback compatible properties for existing backend
             };
 
             if(!payload.kode) return Swal.fire('Oops...', 'Pilih Kode/Nama Bahan atau Scan Barcode terlebih dahulu!', 'warning');
@@ -2227,17 +2139,10 @@
                 let stockItemIndex = State.stockData.findIndex(s => {
                     let k = String(s.KodeBahan || '').trim().toUpperCase();
                     let r = String(s.Resto || '').trim().toUpperCase();
-                    let l = String(s.KodeLot || '-').trim().toUpperCase();
-                    let p = String(s.KodeProduksi || '-').trim().toUpperCase();
-                    let e = String(s.ExpDate || '-').trim().toUpperCase();
-
                     let pk = String(payload.kode || '').trim().toUpperCase();
                     let pr = String(payload.resto || '').trim().toUpperCase();
-                    let pl = String(payload.lot || '-').trim().toUpperCase();
-                    let pp = String(payload.produksi || '-').trim().toUpperCase();
-                    let pe = String(payload.exp || '-').trim().toUpperCase();
                     
-                    return k === pk && r === pr && l === pl && p === pp && e === pe;
+                    return k === pk && r === pr;
                 });
 
                 if (stockItemIndex > -1) {
@@ -2266,12 +2171,11 @@
 
                     State.stockData.push({
                         KodeBahan: payload.kode, NamaBahan: payload.nama, Kategori: payload.kategori, Resto: payload.resto,
-                        QtyBesar: payload.newQtyBesar, QtyKecil: payload.newQtyKecil,
-                        KodeLot: payload.lot, KodeProduksi: payload.produksi, ExpDate: payload.exp
+                        QtyBesar: payload.newQtyBesar, QtyKecil: payload.newQtyKecil
                     });
                 } else {
                     btn.disabled = false; btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> <span>Submit Data</span>`;
-                    return Swal.fire('Error', 'Data Stock tidak ditemukan untuk kombinasi Batch ini!', 'error');
+                    return Swal.fire('Error', 'Data Stock tidak ditemukan di Resto ini!', 'error');
                 }
             } else {
                 btn.disabled = false; btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> <span>Submit Data</span>`;
@@ -2314,7 +2218,7 @@
                 if(selRestos.length > 0 && !selRestos.includes(r.Resto)) matchResto = false;
                 
                 if(searchVal) {
-                    const combinedStr = `${r.KodeBahan} ${r.NamaBahan} ${r.Petugas} ${r.KodeLot || ''} ${r.KodeProduksi || ''}`.toLowerCase();
+                    const combinedStr = `${r.KodeBahan} ${r.NamaBahan} ${r.Petugas}`.toLowerCase();
                     if(!combinedStr.includes(searchVal)) matchSearch = false;
                 }
                 
@@ -2342,7 +2246,6 @@
                         <tr class="hover:bg-slate-50"><td class="px-5 py-3 text-xs">${r.Tanggal}</td><td class="px-5 py-3 font-mono text-xs">${r.KodeBahan}</td>
                         <td class="px-5 py-3 font-medium">${r.NamaBahan}</td><td class="px-5 py-3 text-xs">${r.Kategori}</td>
                         <td class="px-5 py-3 font-bold text-blue-600">${Math.abs(parseFloat(r.Qty))} <span class="text-xs font-normal">${r.Satuan}</span></td>
-                        <td class="px-5 py-3 text-xs leading-tight">L:${r.KodeLot || '-'}<br>P:${r.KodeProduksi || '-'}<br>E:${r.ExpDate || '-'}</td>
                         <td class="px-5 py-3 text-xs">${r.Resto}</td>
                         <td class="px-5 py-3 text-center"><button onclick="viewTransactionDetail('${r.ID}')" class="text-blue-500 hover:bg-blue-50 p-1.5 rounded" title="View"><i class="fa-solid fa-eye"></i></button></td></tr>
                     `).join('');
@@ -2365,7 +2268,7 @@
                 html: `<div class="text-left text-sm space-y-3 mt-4 p-4 bg-slate-50 rounded-lg border border-slate-200">
                     <div class="grid grid-cols-2 gap-2 border-b border-slate-200 pb-2"><span class="text-slate-500">ID Transaksi</span> <span class="font-bold font-mono text-slate-800">${trx.ID}</span><span class="text-slate-500">Tipe</span> <span class="font-bold ${tColor}">${tType}</span><span class="text-slate-500">Waktu</span> <span class="font-bold text-slate-800">${trx.Tanggal}</span></div>
                     <div class="grid grid-cols-2 gap-2 border-b border-slate-200 pb-2 pt-2"><span class="text-slate-500">Kode Bahan</span> <span class="font-bold font-mono text-slate-800">${trx.KodeBahan}</span><span class="text-slate-500">Nama Bahan</span> <span class="font-bold text-slate-800">${trx.NamaBahan}</span><span class="text-slate-500">Kategori</span> <span class="font-bold text-slate-800">${trx.Kategori}</span></div>
-                    <div class="grid grid-cols-2 gap-2 border-b border-slate-200 pb-2 pt-2"><span class="text-slate-500">Qty</span> <span class="font-bold text-blue-600 text-lg">${Math.abs(parseFloat(trx.Qty))} ${trx.Satuan}</span><span class="text-slate-500">Kode Lot</span> <span class="font-bold text-slate-800">${trx.KodeLot || '-'}</span><span class="text-slate-500">Kode Produksi</span> <span class="font-bold text-slate-800">${trx.KodeProduksi || '-'}</span><span class="text-slate-500">Expired</span> <span class="font-bold text-slate-800">${trx.ExpDate || '-'}</span></div>
+                    <div class="grid grid-cols-2 gap-2 border-b border-slate-200 pb-2 pt-2"><span class="text-slate-500">Qty</span> <span class="font-bold text-blue-600 text-lg">${Math.abs(parseFloat(trx.Qty))} ${trx.Satuan}</span></div>
                     <div class="grid grid-cols-2 gap-2 pt-2"><span class="text-slate-500">Petugas</span> <span class="font-bold text-slate-800">${trx.Petugas}</span><span class="text-slate-500">Resto</span> <span class="font-bold text-slate-800">${trx.Resto}</span></div>
                 </div>`, showCloseButton: true, showConfirmButton: false, customClass: { popup: 'rounded-2xl' }
             });
@@ -2375,6 +2278,7 @@
         function loadDataTableView(container, viewId) {
             container.appendChild(document.getElementById('tpl-datatable').content.cloneNode(true));
             buildCheckboxDropdown('data', 'data');
+            populateCategoryDropdowns();
 
             let headers = [];
             let dataList = [];
@@ -2382,25 +2286,9 @@
             if (viewId === 'database') {
                 document.getElementById('tableTitle').textContent = "Database Stock Realtime";
                 document.getElementById('tableSubtitle').textContent = "Pantau dan kelola ketersediaan stock.";
-                headers = ['Kode Bahan', 'Nama Bahan', 'Kategori', 'Stock Kecil', 'Stock Besar', 'Lot/Prod/Exp', 'Resto', 'Aksi'];
+                headers = ['Kode Bahan', 'Nama Bahan', 'Kategori', 'Stock Kecil', 'Stock Besar', 'Resto', 'Aksi'];
                 dataList = (State.user.role === 'Admin' || State.user.role === 'Admin Warehouse') ? State.stockData : State.stockData.filter(s => s.Resto === State.user.resto);
             } 
-            else if (viewId === 'expired') {
-                document.getElementById('tableTitle').textContent = "Warning Expired Bahan";
-                document.getElementById('tableSubtitle').textContent = "Daftar bahan yang mendekati atau melewati kadaluarsa.";
-                headers = ['Kode Bahan', 'Bahan & Batch', 'Kategori', 'Stock', 'Exp Date', 'Sisa Waktu', 'Status', 'Resto', 'Aksi'];
-                
-                const today = new Date();
-                const processed = State.stockData.filter(s => s.ExpDate && s.ExpDate !== '-').map(s => {
-                    const expD = new Date(s.ExpDate);
-                    const diffDays = Math.ceil((expD - today) / (1000 * 60 * 60 * 24));
-                    let status = 'Aman';
-                    if (diffDays <= 0) status = 'Expired'; else if (diffDays <= 30) status = 'Warning';
-                    return {...s, SisaHari: diffDays, Status: status};
-                });
-                processed.sort((a,b) => a.SisaHari - b.SisaHari);
-                dataList = (State.user.role === 'Admin' || State.user.role === 'Admin Warehouse') ? processed : processed.filter(s => s.Resto === State.user.resto);
-            }
             else if (viewId === 'adjustment') {
                 document.getElementById('tableTitle').textContent = "Data Adjustment";
                 document.getElementById('tableSubtitle').textContent = "Pengajuan penyesuaian selisih stock system dan fisik.";
@@ -2437,7 +2325,7 @@
                     let rMatch = (selRestos.length === 0) || selRestos.includes(r.Resto);
                     let dMatch = true;
                     
-                    let compareDate = r.Tanggal ? r.Tanggal.split(' ')[0] : r.ExpDate;
+                    let compareDate = r.Tanggal ? r.Tanggal.split(' ')[0] : null;
                     if(compareDate && compareDate !== '-') {
                         if(sDate && compareDate < sDate) dMatch = false;
                         if(eDate && compareDate > eDate) dMatch = false;
@@ -2459,32 +2347,21 @@
             tbody.innerHTML = State.filteredData.slice(start, end).map(r => {
                 let cols = "";
                 if (State.currentView === 'database') {
-                    let dbActionBtn = `<button onclick="viewStock('${r.KodeBahan}', '${r.Resto}', '${r.KodeLot}', '${r.KodeProduksi}', '${r.ExpDate}')" class="text-blue-500 hover:bg-blue-50 p-1.5 rounded" title="View Detail"><i class="fa-solid fa-eye"></i></button>`;
+                    let dbActionBtn = `<button onclick="viewStock('${r.KodeBahan}', '${r.Resto}')" class="text-blue-500 hover:bg-blue-50 p-1.5 rounded" title="View Detail"><i class="fa-solid fa-eye"></i></button>`;
                     if (State.user.role === 'Admin') {
-                        dbActionBtn += `<button onclick="editStock('${r.KodeBahan}', '${r.Resto}', '${r.KodeLot}', '${r.KodeProduksi}', '${r.ExpDate}')" class="text-amber-500 hover:bg-amber-50 p-1.5 rounded ml-1" title="Edit"><i class="fa-solid fa-pen"></i></button>`;
-                        dbActionBtn += `<button onclick="deleteStock('${r.KodeBahan}', '${r.Resto}', '${r.KodeLot}', '${r.KodeProduksi}', '${r.ExpDate}')" class="text-red-500 hover:bg-red-50 p-1.5 rounded ml-1" title="Hapus"><i class="fa-solid fa-trash"></i></button>`;
+                        dbActionBtn += `<button onclick="editStock('${r.KodeBahan}', '${r.Resto}')" class="text-amber-500 hover:bg-amber-50 p-1.5 rounded ml-1" title="Edit"><i class="fa-solid fa-pen"></i></button>`;
+                        dbActionBtn += `<button onclick="deleteStock('${r.KodeBahan}', '${r.Resto}')" class="text-red-500 hover:bg-red-50 p-1.5 rounded ml-1" title="Hapus"><i class="fa-solid fa-trash"></i></button>`;
                     }
                     cols = `<td class="px-5 py-3 font-mono text-xs bg-slate-100">${r.KodeBahan}</td><td class="px-5 py-3 font-medium">${r.NamaBahan}</td>
                     <td class="px-5 py-3 text-xs">${r.Kategori}</td><td class="px-5 py-3">${r.QtyKecil}</td><td class="px-5 py-3 font-bold text-blue-600">${r.QtyBesar}</td>
-                    <td class="px-5 py-3 text-xs">L:${r.KodeLot}<br>P:${r.KodeProduksi}<br>E:${r.ExpDate}</td><td class="px-5 py-3 text-xs">${r.Resto}</td><td class="px-5 py-3 text-center whitespace-nowrap">${dbActionBtn}</td>`;
-                } else if (State.currentView === 'expired') {
-                    const stColor = r.Status === 'Expired' ? 'bg-red-100 text-red-700' : (r.Status === 'Warning' ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700');
-                    let expActionBtn = `<button onclick="viewStock('${r.KodeBahan}', '${r.Resto}', '${r.KodeLot}', '${r.KodeProduksi}', '${r.ExpDate}')" class="text-blue-500 hover:bg-blue-50 p-1.5 rounded" title="View Detail"><i class="fa-solid fa-eye"></i></button>`;
-                    cols = `<td class="px-5 py-3 font-mono text-xs">${r.KodeBahan}</td>
-                    <td class="px-5 py-3 font-medium">${r.NamaBahan} <div class="text-[10px] text-slate-500 font-normal mt-0.5">L: ${r.KodeLot} | P: ${r.KodeProduksi}</div></td>
-                    <td class="px-5 py-3 text-xs">${r.Kategori}</td>
-                    <td class="px-5 py-3 font-bold text-blue-600">${r.QtyBesar}</td>
-                    <td class="px-5 py-3 font-mono text-xs">${r.ExpDate}</td>
-                    <td class="px-5 py-3 font-bold ${r.SisaHari <= 0 ? 'text-red-600' : 'text-slate-700'}">${r.SisaHari} Hari</td>
-                    <td class="px-5 py-3"><span class="px-2 py-1 rounded-md text-[10px] font-bold ${stColor}">${r.Status}</span></td>
-                    <td class="px-5 py-3 text-xs">${r.Resto}</td><td class="px-5 py-3 text-center whitespace-nowrap">${expActionBtn}</td>`;
+                    <td class="px-5 py-3 text-xs">${r.Resto}</td><td class="px-5 py-3 text-center whitespace-nowrap">${dbActionBtn}</td>`;
                 } else if (State.currentView === 'adjustment') {
                     const stColor = r.Status === 'Approved' ? 'bg-emerald-100 text-emerald-700' : (r.Status === 'Rejected' ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-700');
                     let actionBtn = `<button onclick="viewAdjustmentDetail('${r.ID}')" class="text-blue-500 hover:bg-blue-50 p-1.5 rounded mr-1" title="View Detail"><i class="fa-solid fa-eye"></i></button>`;
                     if (r.Status === 'Pending' && State.user.role === 'Admin') {
                         actionBtn += `<button onclick="approveAdj('${r.ID}')" class="text-emerald-600 bg-emerald-50 px-2 py-1 rounded hover:bg-emerald-100 text-xs mr-1" title="Approve"><i class="fa-solid fa-check"></i></button><button onclick="rejectAdj('${r.ID}')" class="text-red-600 bg-red-50 px-2 py-1 rounded hover:bg-red-100 text-xs" title="Reject"><i class="fa-solid fa-xmark"></i></button>`;
                     }
-                    cols = `<td class="px-5 py-3 text-xs">${r.Tanggal}</td><td class="px-5 py-3 font-medium">${r.NamaBahan} <span class="text-[10px] text-slate-400 block">${r.KodeBahan} | L:${r.KodeLot}, P:${r.KodeProduksi}</span></td>
+                    cols = `<td class="px-5 py-3 text-xs">${r.Tanggal}</td><td class="px-5 py-3 font-medium">${r.NamaBahan} <span class="text-[10px] text-slate-400 block">${r.KodeBahan}</span></td>
                     <td class="px-5 py-3 text-xs leading-tight">Sys: <b class="text-slate-700">${r.QtySystem}</b><br>Fsk: <b class="text-blue-600">${r.QtyFisik} ${r.Satuan}</b></td>
                     <td class="px-5 py-3 text-xs whitespace-normal w-48">${r.Alasan}</td><td class="px-5 py-3 text-xs">${r.Pengaju}<br><span class="text-[10px] text-slate-400">${r.Resto}</span></td>
                     <td class="px-5 py-3"><span class="px-2 py-1 rounded-md text-[10px] font-bold ${stColor}">${r.Status}</span></td>
@@ -2519,19 +2396,15 @@
 
             if(view === 'database') {
                 title = "Laporan Database Stock";
-                headers = [['Kode Bahan', 'Nama Bahan', 'Kategori', 'Stock Kecil', 'Stock Besar', 'Kode Lot', 'Kode Produksi', 'Exp Date', 'Resto']];
-                body = dataToExport.map(r => [r.KodeBahan, r.NamaBahan, r.Kategori, r.QtyKecil, r.QtyBesar, r.KodeLot, r.KodeProduksi, r.ExpDate, r.Resto]);
-            } else if (view === 'expired') {
-                title = "Laporan Warning Expired Bahan";
-                headers = [['Kode Bahan', 'Nama Bahan', 'Kategori', 'Kode Lot', 'Kode Produksi', 'Stock Besar', 'Exp Date', 'Sisa Waktu', 'Status', 'Resto']];
-                body = dataToExport.map(r => [r.KodeBahan, r.NamaBahan, r.Kategori, r.KodeLot, r.KodeProduksi, r.QtyBesar, r.ExpDate, r.SisaHari + ' Hari', r.Status, r.Resto]);
+                headers = [['Kode Bahan', 'Nama Bahan', 'Kategori', 'Stock Kecil', 'Stock Besar', 'Resto']];
+                body = dataToExport.map(r => [r.KodeBahan, r.NamaBahan, r.Kategori, r.QtyKecil, r.QtyBesar, r.Resto]);
             } else if (view === 'adjustment') {
                 title = "Laporan Data Adjustment";
-                headers = [['Tanggal', 'Kode Bahan', 'Nama Bahan', 'Kode Lot', 'Kode Produksi', 'Sys Qty', 'Fisik Qty', 'Alasan', 'Pengaju', 'Status', 'Resto']];
-                body = dataToExport.map(r => [r.Tanggal, r.KodeBahan, r.NamaBahan, r.KodeLot, r.KodeProduksi, r.QtySystem, r.QtyFisik + ' ' + r.Satuan, r.Alasan, r.Pengaju, r.Status, r.Resto]);
+                headers = [['Tanggal', 'Kode Bahan', 'Nama Bahan', 'Sys Qty', 'Fisik Qty', 'Alasan', 'Pengaju', 'Status', 'Resto']];
+                body = dataToExport.map(r => [r.Tanggal, r.KodeBahan, r.NamaBahan, r.QtySystem, r.QtyFisik + ' ' + r.Satuan, r.Alasan, r.Pengaju, r.Status, r.Resto]);
             } else if (view === 'inbound' || view === 'outbound') {
                 title = view === 'inbound' ? "Laporan Riwayat Barang Masuk" : "Laporan Riwayat Barang Keluar";
-                headers = [['Tanggal', 'Kode Bahan', 'Nama Bahan', 'Kategori', 'Qty', 'Satuan', 'Lot/Prod/Exp', 'Petugas', 'Resto']];
+                headers = [['Tanggal', 'Kode Bahan', 'Nama Bahan', 'Kategori', 'Qty', 'Satuan', 'Petugas', 'Resto']];
                 body = dataToExport.map(r => [
                     r.Tanggal, 
                     r.KodeBahan, 
@@ -2539,7 +2412,6 @@
                     r.Kategori, 
                     Math.abs(parseFloat(r.Qty)), 
                     r.Satuan, 
-                    `L:${r.KodeLot || '-'} P:${r.KodeProduksi || '-'} E:${r.ExpDate || '-'}`, 
                     r.Petugas, 
                     r.Resto
                 ]);
@@ -2597,8 +2469,8 @@
         }
 
         // --- DATABASE STOCK ACTION LOGIC ---
-        function viewStock(kode, resto, lot, prod, exp) {
-            const stock = State.stockData.find(s => s.KodeBahan === kode && s.Resto === resto && s.KodeLot === lot && s.KodeProduksi === prod && s.ExpDate === exp);
+        function viewStock(kode, resto) {
+            const stock = State.stockData.find(s => s.KodeBahan === kode && s.Resto === resto);
             if(!stock) return;
             Swal.fire({
                 title: 'Detail Stock Database',
@@ -2608,16 +2480,13 @@
                     <p><span class="text-slate-500 text-sm">Kategori:</span> <br><b>${stock.Kategori}</b></p>
                     <p><span class="text-slate-500 text-sm">Stock Terkini (Satuan Kecil):</span> <br><b>${stock.QtyKecil}</b></p>
                     <p><span class="text-slate-500 text-sm">Stock Terkini (Satuan Besar):</span> <br><b class="text-blue-600 text-lg">${stock.QtyBesar}</b></p>
-                    <p><span class="text-slate-500 text-sm">Kode Lot:</span> <br><b>${stock.KodeLot}</b></p>
-                    <p><span class="text-slate-500 text-sm">Kode Produksi:</span> <br><b>${stock.KodeProduksi}</b></p>
-                    <p><span class="text-slate-500 text-sm">Expired Date:</span> <br><b>${stock.ExpDate}</b></p>
                     <p><span class="text-slate-500 text-sm">Lokasi Resto:</span> <br><b>${stock.Resto}</b></p>
                 </div>`,
                 showConfirmButton: true, confirmButtonText: 'Tutup', customClass: { popup: 'rounded-2xl' }
             });
         }
-        function editStock(kode, resto, lot, prod, exp) {
-            const stock = State.stockData.find(s => s.KodeBahan === kode && s.Resto === resto && s.KodeLot === lot && s.KodeProduksi === prod && s.ExpDate === exp);
+        function editStock(kode, resto) {
+            const stock = State.stockData.find(s => s.KodeBahan === kode && s.Resto === resto);
             if(!stock) return;
             Swal.fire({
                 title: 'Edit Stock',
@@ -2625,20 +2494,15 @@
                     <div class="text-left space-y-3 mt-3">
                         <div><label class="block text-xs font-medium text-slate-500 mb-1">Stock Kecil Saat Ini</label><input type="text" id="editQtyKecil" class="w-full border border-slate-300 px-3 py-2 text-sm rounded-lg outline-none focus:ring-2 focus:ring-blue-500" value="${stock.QtyKecil}"></div>
                         <div><label class="block text-xs font-medium text-slate-500 mb-1">Stock Besar Saat Ini</label><input type="text" id="editQtyBesar" class="w-full border border-slate-300 px-3 py-2 text-sm rounded-lg outline-none focus:ring-2 focus:ring-blue-500" value="${stock.QtyBesar}"></div>
-                        <div><label class="block text-xs font-medium text-slate-500 mb-1">Kode Lot (Terbaru)</label><input type="text" id="editLot" class="w-full border border-slate-300 px-3 py-2 text-sm rounded-lg outline-none focus:ring-2 focus:ring-blue-500" value="${stock.KodeLot}"></div>
-                        <div><label class="block text-xs font-medium text-slate-500 mb-1">Kode Produksi (Terbaru)</label><input type="text" id="editProd" class="w-full border border-slate-300 px-3 py-2 text-sm rounded-lg outline-none focus:ring-2 focus:ring-blue-500" value="${stock.KodeProduksi}"></div>
-                        <div><label class="block text-xs font-medium text-slate-500 mb-1">Expired Date (Terbaru)</label><input type="date" id="editExp" class="w-full border border-slate-300 px-3 py-2 text-sm rounded-lg outline-none focus:ring-2 focus:ring-blue-500" value="${stock.ExpDate !== '-' ? stock.ExpDate : ''}"></div>
                     </div>
                 `,
                 showCancelButton: true, confirmButtonText: 'Simpan', confirmButtonColor: '#2563eb',
                 preConfirm: () => {
                     return {
-                        kode: kode, resto: resto, oldLot: lot, oldProduksi: prod, oldExp: exp,
+                        kode: kode, resto: resto, lot: '-', produksi: '-', exp: '-',
+                        oldLot: '-', oldProduksi: '-', oldExp: '-',
                         qtyKecil: document.getElementById('editQtyKecil').value,
-                        qtyBesar: document.getElementById('editQtyBesar').value,
-                        lot: document.getElementById('editLot').value || '-',
-                        produksi: document.getElementById('editProd').value || '-',
-                        exp: document.getElementById('editExp').value || '-'
+                        qtyBesar: document.getElementById('editQtyBesar').value
                     }
                 }
             }).then(res => {
@@ -2646,22 +2510,16 @@
                     const newData = res.value;
 
                     // 1. Optimistic Update
-                    const stockIndex = State.stockData.findIndex(s => s.KodeBahan === kode && s.Resto === resto && s.KodeLot === lot && s.KodeProduksi === prod && s.ExpDate === exp);
+                    const stockIndex = State.stockData.findIndex(s => s.KodeBahan === kode && s.Resto === resto);
                     if (stockIndex > -1) {
                         State.stockData[stockIndex].QtyKecil = newData.qtyKecil;
                         State.stockData[stockIndex].QtyBesar = newData.qtyBesar;
-                        State.stockData[stockIndex].KodeLot = newData.lot;
-                        State.stockData[stockIndex].KodeProduksi = newData.produksi;
-                        State.stockData[stockIndex].ExpDate = newData.exp;
                     }
                     
-                    const tableIndex = State.tableData.findIndex(s => s.KodeBahan === kode && s.Resto === resto && s.KodeLot === lot && s.KodeProduksi === prod && s.ExpDate === exp);
+                    const tableIndex = State.tableData.findIndex(s => s.KodeBahan === kode && s.Resto === resto);
                     if (tableIndex > -1) {
                         State.tableData[tableIndex].QtyKecil = newData.qtyKecil;
                         State.tableData[tableIndex].QtyBesar = newData.qtyBesar;
-                        State.tableData[tableIndex].KodeLot = newData.lot;
-                        State.tableData[tableIndex].KodeProduksi = newData.produksi;
-                        State.tableData[tableIndex].ExpDate = newData.exp;
                     }
 
                     filterTable();
@@ -2677,7 +2535,7 @@
                 }
             })
         }
-        function deleteStock(kode, resto, lot, prod, exp) {
+        function deleteStock(kode, resto) {
             Swal.fire({
                 title: 'Hapus Data Stock?',
                 text: "Data stock ini akan dihapus secara permanen dari sistem!",
@@ -2685,14 +2543,14 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Optimistic Update
-                    State.stockData = State.stockData.filter(s => !(s.KodeBahan === kode && s.Resto === resto && s.KodeLot === lot && s.KodeProduksi === prod && s.ExpDate === exp));
-                    State.tableData = State.tableData.filter(s => !(s.KodeBahan === kode && s.Resto === resto && s.KodeLot === lot && s.KodeProduksi === prod && s.ExpDate === exp));
+                    State.stockData = State.stockData.filter(s => !(s.KodeBahan === kode && s.Resto === resto));
+                    State.tableData = State.tableData.filter(s => !(s.KodeBahan === kode && s.Resto === resto));
                     
                     filterTable();
                     
                     Swal.fire({icon: 'success', title: 'Terhapus!', text: 'Data stock telah dihapus.', toast: true, position: 'top-end', showConfirmButton: false, timer: 1500});
                     
-                    runGas('deleteStockData', {kode, resto, lot, produksi: prod, exp}).then(d => { 
+                    runGas('deleteStockData', {kode, resto, lot: '-', produksi: '-', exp: '-'}).then(d => { 
                         syncLocalState(d, true); // Keep local modifications
                     }).catch(e => {
                         console.error("Gagal sinkronisasi dengan server:", e);
@@ -2708,7 +2566,7 @@
             if (stockDataFiltered.length === 0) return Swal.fire('Info', 'Belum ada data stock yang bisa disesuaikan.', 'info');
 
             const stockOptions = stockDataFiltered
-                .map((s, index) => `<option value="${index}">[${s.Resto}] ${s.KodeBahan} - ${s.NamaBahan} (L:${s.KodeLot})</option>`).join('');
+                .map((s, index) => `<option value="${index}">[${s.Resto}] ${s.KodeBahan} - ${s.NamaBahan}</option>`).join('');
 
             window.tempAdjStockData = stockDataFiltered;
 
@@ -2716,7 +2574,7 @@
                 title: 'Pengajuan Adjustment',
                 html: `<div class="text-left space-y-4 mt-3">
                         <div class="w-full">
-                            <label class="block text-xs font-medium text-slate-500 mb-1">Cari & Pilih Bahan (Database & Batch)</label>
+                            <label class="block text-xs font-medium text-slate-500 mb-1">Cari & Pilih Bahan (Database)</label>
                             <div class="relative mb-2">
                                 <i class="fa-solid fa-search absolute left-3 top-2.5 text-slate-400"></i>
                                 <input type="text" id="adjSearchBahan" onkeyup="filterAdjDropdown()" class="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Ketik nama/kode bahan...">
@@ -2731,27 +2589,36 @@
                             <!-- Detail akan diinjeksi via JS -->
                         </div>
 
+                        <div><label class="block text-xs font-medium text-slate-500 mb-1">Tanggal Adjustment</label><input type="datetime-local" id="adjTanggal" class="w-full border border-slate-300 px-3 py-2 text-sm rounded-lg outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50"></div>
                         <div><label class="block text-xs font-medium text-slate-500 mb-1">Stock Fisik Saat Ini (Satuan Besar)</label><input type="number" id="adjFisik" class="w-full border border-slate-300 px-3 py-2 text-sm rounded-lg outline-none focus:ring-2 focus:ring-blue-500" placeholder="Contoh: 10"></div>
                         <div><label class="block text-xs font-medium text-slate-500 mb-1">Keterangan / Alasan</label><textarea id="adjAlasan" class="w-full border border-slate-300 px-3 py-2 text-sm rounded-lg outline-none focus:ring-2 focus:ring-blue-500" rows="2" placeholder="Barang rusak, selisih hitung, dll"></textarea></div>
                     </div>`,
                 showCancelButton: true, confirmButtonText: 'Ajukan Perubahan', confirmButtonColor: '#2563eb',
                 didOpen: () => {
                     updateAdjPreview();
+                    const adjTgl = document.getElementById('adjTanggal');
+                    if(adjTgl) {
+                        const now = new Date();
+                        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+                        adjTgl.value = now.toISOString().slice(0,16);
+                    }
                 },
                 preConfirm: () => {
                     const idx = document.getElementById('adjKodeIdx').value; 
                     const fisik = document.getElementById('adjFisik').value; 
                     const alasan = document.getElementById('adjAlasan').value;
+                    const tanggal = document.getElementById('adjTanggal').value;
                     
-                    if(!idx || !fisik || !alasan) return Swal.showValidationMessage('Lengkapi semua data!');
+                    if(!idx || !fisik || !alasan || !tanggal) return Swal.showValidationMessage('Lengkapi semua data!');
                     
                     const stockItem = window.tempAdjStockData[idx];
                     
                     return { 
+                        tanggal: tanggal,
                         kode: stockItem.KodeBahan, nama: stockItem.NamaBahan, qtySystem: stockItem.QtyBesar, 
                         qtyFisik: fisik, satuan: stockItem.QtyBesar.replace(/[0-9.\-]/g, '').trim(), 
                         alasan, pengaju: State.user.name, resto: stockItem.Resto,
-                        lot: stockItem.KodeLot, produksi: stockItem.KodeProduksi, exp: stockItem.ExpDate 
+                        lot: '-', produksi: '-', exp: '-' 
                     };
                 }
             }).then(res => {
@@ -2778,7 +2645,7 @@
             if(!window.tempAdjStockData || !select) return;
             
             const optionsHtml = window.tempAdjStockData.map((s, index) => {
-                const text = `[${s.Resto}] ${s.KodeBahan} - ${s.NamaBahan} (L:${s.KodeLot})`;
+                const text = `[${s.Resto}] ${s.KodeBahan} - ${s.NamaBahan}`;
                 if (text.toLowerCase().includes(query)) {
                     return `<option value="${index}">${text}</option>`;
                 }
@@ -2817,15 +2684,6 @@
                         <span class="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">Stock System</span>
                         <span class="font-bold text-blue-600 text-sm break-words">${s.QtyBesar}</span>
                     </div>
-                    <div class="col-span-2 border-t border-blue-200/60 my-0.5"></div>
-                    <div>
-                        <span class="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">Lot / Produksi</span>
-                        <span class="font-mono text-slate-700 break-words">${s.KodeLot || '-'} / ${s.KodeProduksi || '-'}</span>
-                    </div>
-                    <div>
-                        <span class="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">Expired Date</span>
-                        <span class="font-mono ${s.ExpDate !== '-' ? 'text-rose-600 font-bold' : 'text-slate-700'} break-words">${s.ExpDate || '-'}</span>
-                    </div>
                 </div>
             `;
         };
@@ -2840,7 +2698,6 @@
                     <p><span class="text-slate-500 text-sm">ID Pengajuan:</span> <br><b class="font-mono text-slate-800">${adj.ID}</b></p>
                     <p><span class="text-slate-500 text-sm">Tanggal:</span> <br><b>${adj.Tanggal}</b></p>
                     <p><span class="text-slate-500 text-sm">Bahan:</span> <br><b>${adj.KodeBahan} - ${adj.NamaBahan}</b></p>
-                    <p><span class="text-slate-500 text-sm">Batch:</span> <br><b class="font-mono text-blue-600">L:${adj.KodeLot || '-'}, P:${adj.KodeProduksi || '-'}, E:${adj.ExpDate || '-'}</b></p>
                     <p><span class="text-slate-500 text-sm">Stock System (Awal):</span> <br><b>${adj.QtySystem}</b></p>
                     <p><span class="text-slate-500 text-sm">Stock Fisik (Penyesuaian):</span> <br><b class="text-blue-600 text-lg">${adj.QtyFisik} ${adj.Satuan}</b></p>
                     <p><span class="text-slate-500 text-sm">Alasan:</span> <br><b>${adj.Alasan}</b></p>
@@ -2888,13 +2745,67 @@
             document.getElementById('setAppLogo').value = State.settings.logo_url || '';
             document.getElementById('setAdminEmail').value = State.settings.admin_email || '';
             
+            // Logo Preview Init
+            if(State.settings.logo_url) {
+                document.getElementById('logoPreview').src = State.settings.logo_url;
+                document.getElementById('wrapLogoPreview').classList.remove('hidden');
+            }
+
+            // Handle Image Upload & Compress to Base64
+            const logoInput = document.getElementById('setAppLogoFile');
+            if(logoInput) {
+                logoInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if(!file) return;
+
+                    if(file.size > 2 * 1024 * 1024) {
+                        Swal.fire('Peringatan', 'Ukuran gambar maksimal 2MB', 'warning');
+                        this.value = ''; return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const img = new Image();
+                        img.onload = function() {
+                            const canvas = document.createElement('canvas');
+                            const MAX_WIDTH = 256;
+                            const MAX_HEIGHT = 256;
+                            let width = img.width;
+                            let height = img.height;
+
+                            if (width > height) {
+                                if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+                            } else {
+                                if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; }
+                            }
+                            canvas.width = width; canvas.height = height;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0, width, height);
+                            
+                            const dataUrl = canvas.toDataURL('image/png', 0.9);
+                            document.getElementById('setAppLogo').value = dataUrl;
+                            document.getElementById('logoPreview').src = dataUrl;
+                            document.getElementById('wrapLogoPreview').classList.remove('hidden');
+                        }
+                        img.src = event.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
             const selOptions = State.restos.map(r=>`<option value="${r}">${r}</option>`).join('');
             document.querySelectorAll('.set-resto-select').forEach(sel => sel.innerHTML = selOptions);
             
-            renderRestoTable(); renderUserTable(); renderMasterTable(); toggleUserFields();
+            renderRestoTable(); 
+            renderCategoryTable();
+            renderUserTable(); 
+            renderMasterTable(); 
+            toggleUserFields();
+            populateCategoryDropdowns();
         }
+        
         function switchSetTab(t) {
-            ['app','resto','user','master'].forEach(x => {
+            ['app','resto','kategori','user','master'].forEach(x => {
                 document.getElementById(`setTab-${x}`).classList.add('hidden');
                 document.getElementById(`tabBtn-${x}`).className = "px-4 py-2 text-sm font-medium rounded-lg text-slate-500 hover:bg-slate-50 whitespace-nowrap";
             });
@@ -2954,6 +2865,54 @@
 
         function renderRestoTable() {
             document.getElementById('tblRestoList').innerHTML = State.restos.map((r,i)=>`<tr class="hover:bg-slate-50"><td class="px-5 py-3">${r}</td><td class="px-5 py-3 text-center"><button onclick="deleteRestoItem(${i})" class="text-red-500 hover:bg-red-50 px-2 py-1 rounded"><i class="fa-solid fa-trash"></i></button></td></tr>`).join('');
+        }
+
+        // KATEGORI BAHAN LOGIC
+        function saveNewCategory() {
+            const val = document.getElementById('setNewCategory').value.trim();
+            if(!val) return;
+            Swal.fire({title: 'Menyimpan...', allowOutsideClick: false, didOpen: () => Swal.showLoading()});
+
+            State.categories.push(val);
+            document.getElementById('setNewCategory').value='';
+            renderCategoryTable();
+            populateCategoryDropdowns();
+
+            runGas('addCategory', val).then(d => {
+                if(d) syncLocalState(d);
+                renderCategoryTable();
+                populateCategoryDropdowns();
+                Swal.fire({icon: 'success', title: 'Tersimpan', toast: true, position: 'top-end', showConfirmButton: false, timer: 1500});
+            }).catch(e => {
+                // Fallback local API
+                Swal.fire({icon: 'success', title: 'Tersimpan', text: 'Tersimpan di local (Simulasi API)', toast: true, position: 'top-end', showConfirmButton: false, timer: 1500});
+            });
+        }
+
+        function deleteCategoryItem(idx) {
+            Swal.fire({title: 'Hapus Kategori?', icon: 'warning', showCancelButton: true, confirmButtonText: 'Ya, Hapus', confirmButtonColor: '#ef4444'}).then(r => {
+                if(r.isConfirmed) {
+                    Swal.fire({title: 'Menghapus...', allowOutsideClick: false, didOpen: () => Swal.showLoading()});
+                    State.categories.splice(idx, 1);
+                    renderCategoryTable();
+                    populateCategoryDropdowns();
+                    
+                    runGas('deleteCategory', idx).then(d=>{
+                        if(d) syncLocalState(d);
+                        renderCategoryTable();
+                        populateCategoryDropdowns();
+                        Swal.fire({icon: 'success', title: 'Terhapus', toast: true, position: 'top-end', showConfirmButton: false, timer: 1500});
+                    }).catch(e => { 
+                        // Fallback local API
+                        Swal.fire({icon: 'success', title: 'Terhapus', text: 'Terhapus di local (Simulasi API)', toast: true, position: 'top-end', showConfirmButton: false, timer: 1500});
+                    });
+                }
+            });
+        }
+
+        function renderCategoryTable() {
+            const tbl = document.getElementById('tblCategoryList');
+            if(tbl) tbl.innerHTML = State.categories.map((c,i)=>`<tr class="hover:bg-slate-50"><td class="px-5 py-3">${c}</td><td class="px-5 py-3 text-center"><button onclick="deleteCategoryItem(${i})" class="text-red-500 hover:bg-red-50 px-2 py-1 rounded"><i class="fa-solid fa-trash"></i></button></td></tr>`).join('');
         }
 
         function toggleUserFields() {
